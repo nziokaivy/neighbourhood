@@ -13,3 +13,8 @@ def home(request):
     current_user = request.user
     businesses = Business.objects.order_by('-pub_date')
     return render(request, 'index.html', {'businesses':businesses})
+
+def profile(request):
+    user = request.user    
+    business = Business.objects.all().filter(poster_id = user.id)
+    return render(request, 'profile.html', {'business':business, "user":user, "current_user":request.user })

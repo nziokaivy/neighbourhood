@@ -86,7 +86,7 @@ body {
     <a href="/admin"><i class="fa fa-user-plus" ></i><br>ADMIN</a>
     {% if user.is_authenticated %}
     <a href="#"><i class="fa fa-plus"></i><br>ADD PROJECT</a>
-    <a href="#"><i class="fa fa-user"></i><br>PROFILE</a>
+    <a href="{% url 'profile' %}"><i class="fa fa-user"></i><br>PROFILE</a>
     <a href="/logout"><i class="fa fa-sign-out"></i><br>LOGOUT</a>
     {% else %}
     <a href="/accounts/register"><i class="fa fa-pencil-square-o"></i><br>REGISTER</a>

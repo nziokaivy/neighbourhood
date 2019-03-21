@@ -52,39 +52,6 @@ class Neighbourhood(models.Model):
         neighbourhoods = cls.objects.filter(id=id).update(id=id)
         return neighbourhoods
 
-class Profile(models.Model):
-    profile_photo = models.ImageField( upload_to = 'profiles/', null=True)
-    user_bio = models.CharField(max_length = 100, blank = True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-     
-    
-    def save_profile(self):
-        self.save() 
-
-    def get_absolute_url(self): 
-        return reverse('user_profile')  
-
-     
-
-    @classmethod
-    def get_by_id(cls, id):
-        profile = Profile.objects.get(user = id)
-        return profile
-
-    @classmethod
-    def filter_by_id(cls, id):
-        profile = Profile.objects.filter(user = id).first()
-        return profile    
-
-    @classmethod
-    def search_profile(cls, name):
-        profile = Profile.objects.filter(user__username__icontains = name)
-        return profile 
-    
-    def __str__(self):
-        return f'{self.user.username} Profile'
-
-
 
 class Business(models.Model):
     business_name = models.CharField(max_length=30, null=True)
@@ -129,3 +96,37 @@ class Business(models.Model):
     def update_business(cls, id):
         businesses = cls.objects.filter(id=id).update(id=id)
         return businesses
+
+
+class Profile(models.Model):
+    profile_photo = models.ImageField( upload_to = 'profiles/', null=True)
+    user_bio = models.CharField(max_length = 100, blank = True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    business = models.ForeignKey(Business, null=True) 
+    
+    def save_profile(self):
+        self.save() 
+
+    def get_absolute_url(self): 
+        return reverse('user_profile')  
+
+     
+
+    @classmethod
+    def get_by_id(cls, id):
+        profile = Profile.objects.get(user = id)
+        return profile
+
+    @classmethod
+    def filter_by_id(cls, id):
+        profile = Profile.objects.filter(user = id).first()
+        return profile    
+
+    @classmethod
+    def search_profile(cls, name):
+        profile = Profile.objects.filter(user__username__icontains = name)
+        return profile 
+    
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
