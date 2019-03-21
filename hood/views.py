@@ -10,5 +10,6 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 def home(request):
-    
-    return render(request, 'index.html')
+    current_user = request.user
+    businesses = Business.objects.order_by('-pub_date')
+    return render(request, 'index.html', {'businesses':businesses})
